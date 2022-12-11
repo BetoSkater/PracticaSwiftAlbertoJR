@@ -1,224 +1,145 @@
 import UIKit
-
+//Alberto JR
 //MARK: - EJERCICIO 1 -
-    //Calcular y generar lista con los primeros 100 #primos y hacer un print de los ultimos 10.
-
-var numero:Int = 2;
-var listaPrimos:[Int] = [2]
-
-repeat{
-    numero += 1
-    calculaSiEsPrimo(numero: numero)
-}while listaPrimos.count < 100
-
-print(listaPrimos.suffix(10))
-
-func calculaSiEsPrimo (numero: Int){
-    var esPrimo:Bool = true
-    for index in stride(from: 2, through: numero-1, by: 1){
-        if (numero % index == 0){
-            esPrimo = false
-            break
-        }
-    }
-    if esPrimo  {anadeNumero(primoNuevo: numero)}
-}
-
-
-
-func anadeNumero(primoNuevo:Int){
-    listaPrimos.append(primoNuevo)
-}
-
-//MARK: - EJERCICIO 2-
-sumaPrimerosNumerosPrimos(lista: listaPrimos)
-func sumaPrimerosNumerosPrimos(lista: [Int]){
-    var suma: Int = 0
-    for primo in lista.prefix(50){
-        suma += primo
-    }
-    print("La suma de los 50 primeros números primos es \(suma)")
-}
-//MARK: -EJERCICIO 3-
-    //Dada la siguiente lista, obtener todos los elementos que contengas mas de dos vocales.
-
-
-
-//añadir un metodo a tring que cuente el numero de vocales y usarlo en el for. ademas usar for each. creo que es con extensiones.
-
-extension String{
-    var numeroDeVocales: Int{
-        var numeroVocales:Int = 0
-        self.forEach { char in
-            switch char{
-                case "A","a","Á","á","À","à","Ä","ä","Â","â": numeroVocales += 1
-                case "E","e","É","é","È","è","Ë","ë","Ê","ê": numeroVocales += 1
-                case "I","i","Í","í","Ì","ì","Ï","ï","Î","î": numeroVocales += 1
-                case "O","o","Ó","ó","Ò","ò","Ö","ö","Ô","ô": numeroVocales += 1
-                case "U","u","Ú","ú","Ù","ù","Ü","ü","Û","û": numeroVocales += 1
-                default:
-                  numeroVocales += 0
-            }
-        }
-        return numeroVocales
-    }
-}
-
-var jugadores: [String] = ["Vinicius", "Messi", "Ronaldo", "Pedri", "Mbappe", "Modric", "Militao", "Morata", "Valverde","Benzema", "Piqué"]
-var jugadoresConDosVocales:[String]=[]
-
-obtenerJugadoresConDosVocales()
-
-func obtenerJugadoresConDosVocales (){
     
-    jugadores.forEach { jugador in
-        if jugador.numeroDeVocales > 2 {jugadoresConDosVocales.append(jugador)}
-    }
-}
-print(jugadoresConDosVocales)
+var tools = Tool()
+
+tools.getTheFirstHundredPrimeNumbers()
+
+//MARK: - EJERCICIO 2 -
+
+tools.addTheFirst50PrimeNumbers()
+
+//MARK: -  EJERCICIO 3 -
+
+var playersNameList: [String] = ["Vinicius", "Messi", "Ronaldo", "Pedri", "Mbappe", "Modric", "Militao", "Morata", "Valverde","Benzema", "Piqué"]
+tools.retrieveNamesWithMoreThanTwoVowels(namesList: playersNameList)
 
 //MARK: -EJERCICIO 4-
-//Crear un enumerado que permita indicar la posición de un jugador dentro de un campo de futbol.
-enum PosicionesEnElCampo:String{
-    case PORTERO = "Portero"
-    case LATERAL_DERECHO = "Lateral_Derecho"
-    case CENTRAL = "Central"
-    case LATERAL_IZQUIERDO = "Lateral Izquierdo"
-    case MEDIOCENTRO = "Mediocentro"
-    case EXTREMO_DERECHA = "Extremo Derecha"
-    case EXTREMO_IZQUIERDA = "Extremo Izquierda"
-    case DELANTERO = "Delantero"
-}
+//Ver fichero "PlayerPosition.swift"
 
 //MARK: - EJERCICIO 5 -
-/*
- Crear una clase, con los atributos necesarios, para representar a los miembros
-que participan en una selección del mundial y un enumerado que los diferencie por
-tipo, por ejemplo: Jugador, Seleccionador, Médico, etc.
- */
-struct Miembro{
-    var miembroID: String
-    var nombre:String
-    var apellidos:String
-    var funcion:Cargos
-    
-    
-    
-    enum Cargos:String{
-        
-        case JUGADOR = "Jugador"
-        case CAPITAN = "Capitán"
-        case SELECCIONADOR = "Seleccionador"
-        case MEDICO = "Médico"
-        case NUTRICIONISTA = "Nutricionista"
-        case FISIOTERAPEUTA = "Fisioterapeuta"
-        
-    }
 
-}
+//Ver fichero Member.swift dentro de Sources (Dentro del irectorio Sources al nivel de Main, no dentro de Main)
 
 
 //MARK: - EJERCICIO 6 -
 /*
- - Crear las clases necesarias, con los atributos mínimos, para representar las
- selecciones de fútbol del Mundial de fútbol 2022, por ejemplo: Una clase que
- represente el Mundial, necesitaremos que contenga un listado de Selecciones, cada
- selección tendrá sus atributos, como nombre, país, jugadores, seleccionador, etc
+ Ver los ficheros:
+    - NationalTeam.swift
+    - WorldCup.swift (Esta clase incluye una función que genera una lista de selecciones de prueba)
  */
 
-struct Seleccion{
-    var seleccionID: String
-    var nombre:String
-    var pais: String
-    var jugadores:[Miembro]
-    var equipoTecnico:[Miembro]
-}
 
-struct Mundial{
-    var listaSelecciones:Seleccion
+
+
+
+
+
+
+
+//MARK: - EJERCICIO 7 -
+//Ver la clase Match.swift
+
+printTheFirstTenRandomMatches()
+
+func printTheFirstTenRandomMatches(){
     
+    var listOfPlayedMatches: [String] = []
+    
+    let listOfTeamsToMatch = generationOfNationalTeamsList()
+   
+    for _ in 1...10{
+        let randomOne = Int.random(in: 0...listOfTeamsToMatch.count-1)
+        var randomTwo = Int.random(in: 0...listOfTeamsToMatch.count-1)
+        var areDifferentRandomNumbers : Bool = false
+        
+        while !areDifferentRandomNumbers{
+            randomTwo = Int.random(in: 0...listOfTeamsToMatch.count-1)
+            if randomOne != randomTwo {areDifferentRandomNumbers = true}
+        }
+        
+        //let randomNumers = tools.twoRandomDifferentNumbersGeneratorBasedOnListSize(list: listOfTeamsToMatch)
+        //print(randomNumers)
+        
+        let teamLocal = listOfTeamsToMatch[randomOne]
+        let teamVisitor = listOfTeamsToMatch[randomTwo]
+        
+        let matchToPlay = Match(localTeam: teamLocal, visitorTeam: teamVisitor)
+        print(matchToPlay.matchResult)
+        listOfPlayedMatches.append(matchToPlay.matchResult)
+    }
+    
+
 }
-
-
-
-func generadorDeSeleccionesYEquipos(){
-    var listaSelecciones:[Seleccion] = []
+ func generationOfNationalTeamsList()->[NationalTeam]{
+    var autogeneratedList:[NationalTeam] = []
     
     // Selección Española:
-    let seleccionadorE = Miembro(miembroID: "se001", nombre: "Luis", apellidos: "Enrique", funcion: .SELECCIONADOR)
-    let jugador1E = Miembro(miembroID: "je001", nombre: "Sergio", apellidos: "Busquets", funcion: .CAPITAN)
-    let jugador2E = Miembro(miembroID: "je002", nombre: "David", apellidos: "Villa", funcion: .JUGADOR)
-    let tecnico1E = Miembro(miembroID: "te001", nombre: "Eva", apellidos: "Inventado", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t001", nombre: "La Roja", pais: "España", jugadores: [jugador1E,jugador2E], equipoTecnico: [seleccionadorE,tecnico1E]))
+    let headCoachE = Member(memberID: "se001", name: "Luis", subname: "Enrique", occupation: .HEAD_COACH)
+    let player1E = Member(memberID: "je001", name: "Sergio", subname: "Busquets", occupation: .CAPTAIN)
+    let player2E = Member(memberID: "je002", name: "David", subname: "Villa", occupation: .PLAYER)
+    let tecnico1E = Member(memberID: "te001", name: "Eva", subname: "Inventado", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t001", name: "La Roja", country: "España", team: [player1E,player2E], technicalTeam: [headCoachE,tecnico1E]))
     
     //Selección Brasileña:
-    let seleccionadorB = Miembro(miembroID: "s001", nombre: "Tite", apellidos: "", funcion: .SELECCIONADOR)
-    let jugador1B = Miembro(miembroID: "jb001", nombre: "Thiago", apellidos: "Silva", funcion: .CAPITAN)
-    let jugador2B = Miembro(miembroID: "jb002", nombre: "Alex", apellidos: "Sandro", funcion: .JUGADOR)
-    let tecnico1B = Miembro(miembroID: "tb001", nombre: "Eva2", apellidos: "Inventado2", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t002", nombre: "La Brasileña", pais: "Brasil", jugadores: [jugador1B, jugador2B], equipoTecnico: [seleccionadorB,tecnico1B]))
+    let headCoachB = Member(memberID: "s001", name: "Tite", subname: "", occupation: .HEAD_COACH)
+    let player1B = Member(memberID: "jb001", name: "Thiago", subname: "Silva", occupation: .CAPTAIN)
+    let player2B = Member(memberID: "jb002", name: "Alex", subname: "Sandro", occupation: .PLAYER)
+    let tecnico1B = Member(memberID: "tb001", name: "Eva2", subname: "Inventado2", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t002", name: "La Brasileña", country: "Brasil", team: [player1B, player2B], technicalTeam: [headCoachB,tecnico1B]))
 
     //Selección Francesa:
-    let seleccionadorF = Miembro(miembroID: "sf001", nombre: "Tite", apellidos: "", funcion: .SELECCIONADOR)
-    let jugador1F = Miembro(miembroID: "jf001", nombre: "Thiago", apellidos: "Silva", funcion: .CAPITAN)
-    let jugador2F = Miembro(miembroID: "jf002", nombre: "Alex", apellidos: "Sandro", funcion: .JUGADOR)
-    let tecnico1F = Miembro(miembroID: "tf001", nombre: "Eva2", apellidos: "Inventado3", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t003", nombre: "La Francesa", pais: "Francia", jugadores: [jugador1F, jugador2F], equipoTecnico: [seleccionadorF,tecnico1F]))
+    let headCoachF = Member(memberID: "sf001", name: "Tite", subname: "", occupation: .HEAD_COACH)
+    let player1F = Member(memberID: "jf001", name: "Thiago", subname: "Silva", occupation: .CAPTAIN)
+    let player2F = Member(memberID: "jf002", name: "Alex", subname: "Sandro", occupation: .PLAYER)
+    let tecnico1F = Member(memberID: "tf001", name: "Eva2", subname: "Inventado3", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t003", name: "La Francesa", country: "Francia", team: [player1F, player2F], technicalTeam: [headCoachF,tecnico1F]))
 
     //Selección Alemana:
-    let seleccionadorA = Miembro(miembroID: "sa001", nombre: "Hansi", apellidos: "Flick", funcion: .SELECCIONADOR)
-    let jugador1A = Miembro(miembroID: "ja001", nombre: "Manuel", apellidos: "Neuer", funcion: .CAPITAN)
-    let jugador2A = Miembro(miembroID: "ja002", nombre: "Kai", apellidos: "Havertz", funcion: .JUGADOR)
-    let tecnico1A = Miembro(miembroID: "ta001", nombre: "Elina", apellidos: "Inventado4", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t004", nombre: "La Alemana", pais: "Alemania", jugadores: [jugador1A, jugador2A], equipoTecnico: [seleccionadorA,tecnico1A]))
+    let headCoachA = Member(memberID: "sa001", name: "Hansi", subname: "Flick", occupation: .HEAD_COACH)
+    let player1A = Member(memberID: "ja001", name: "Manuel", subname: "Neuer", occupation: .CAPTAIN)
+    let player2A = Member(memberID: "ja002", name: "Kai", subname: "Havertz", occupation: .PLAYER)
+    let tecnico1A = Member(memberID: "ta001", name: "Elina", subname: "Inventado4", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t004", name: "La Alemana", country: "Alemania", team: [player1A, player2A], technicalTeam: [headCoachA,tecnico1A]))
     
     // Selección Croata:
-    let seleccionadorC = Miembro(miembroID: "sc001", nombre: "Zlatko", apellidos: "Dalic", funcion: .SELECCIONADOR)
-    let jugador1C = Miembro(miembroID: "jc001", nombre: "Luka", apellidos: "Modric", funcion: .CAPITAN)
-    let jugador2C = Miembro(miembroID: "jc002", nombre: "Demagoj", apellidos: "Vida", funcion: .JUGADOR)
-    let tecnico1C = Miembro(miembroID: "tc001", nombre: "Ivanka", apellidos: "Inventado5", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t005", nombre: "La Croata", pais: "Croacia", jugadores: [jugador1C,jugador2C], equipoTecnico: [seleccionadorC,tecnico1C]))
+    let headCoachC = Member(memberID: "sc001", name: "Zlatko", subname: "Dalic", occupation: .HEAD_COACH)
+    let player1C = Member(memberID: "jc001", name: "Luka", subname: "Modric", occupation: .CAPTAIN)
+    let player2C = Member(memberID: "jc002", name: "Demagoj", subname: "Vida", occupation: .PLAYER)
+    let tecnico1C = Member(memberID: "tc001", name: "Ivanka", subname: "Inventado5", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t005", name: "La Croata", country: "Croacia", team: [player1C,player2C], technicalTeam: [headCoachC,tecnico1C]))
     
     //Selección Koreana
-    let seleccionadorK = Miembro(miembroID: "sk001", nombre: "Paulo", apellidos: "Bento", funcion: .SELECCIONADOR)
-    let jugador1K = Miembro(miembroID: "jk001", nombre: "Heung-min", apellidos: "Son", funcion: .CAPITAN)
-    let jugador2K = Miembro(miembroID: "jk002", nombre: "Min-jae", apellidos: "Kim", funcion: .JUGADOR)
-    let tecnico1K = Miembro(miembroID: "tk001", nombre: "Eun", apellidos: "Kim Jong", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t006", nombre: "La Koreana", pais: "Korea del Sur", jugadores: [jugador1K,jugador2K], equipoTecnico: [seleccionadorK,tecnico1K]))
+    let headCoachK = Member(memberID: "sk001", name: "Paulo", subname: "Bento", occupation: .HEAD_COACH)
+    let player1K = Member(memberID: "jk001", name: "Heung-min", subname: "Son", occupation: .CAPTAIN)
+    let player2K = Member(memberID: "jk002", name: "Min-jae", subname: "Kim", occupation: .PLAYER)
+    let tecnico1K = Member(memberID: "tk001", name: "Eun", subname: "Kim Jong", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t006", name: "La Koreana", country: "Korea del Sur", team: [player1K,player2K], technicalTeam: [headCoachK,tecnico1K]))
     
     
     //Selección Ghana
-    let seleccionadorG = Miembro(miembroID: "sg001", nombre: "Vacante", apellidos: "No tienen Seleccionador", funcion: .SELECCIONADOR)
-    let jugador1G = Miembro(miembroID: "jg001", nombre: "André", apellidos: "Ayew", funcion: .CAPITAN)
-    let jugador2G = Miembro(miembroID: "jg002", nombre: "Iñaki", apellidos: "Williams", funcion: .JUGADOR)
-    let tecnico1G = Miembro(miembroID: "tg001", nombre: "Mohammed", apellidos: "Kudus", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t007", nombre: "La Ghana", pais: "Ghana", jugadores: [jugador1G,jugador2G], equipoTecnico: [seleccionadorG,tecnico1G]))
+    let headCoachG = Member(memberID: "sg001", name: "Vacante", subname: "No tienen Seleccionador", occupation: .HEAD_COACH)
+    let player1G = Member(memberID: "jg001", name: "André", subname: "Ayew", occupation: .CAPTAIN)
+    let player2G = Member(memberID: "jg002", name: "Iñaki", subname: "Williams", occupation: .PLAYER)
+    let tecnico1G = Member(memberID: "tg001", name: "Mohammed", subname: "Kudus", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t007", name: "La Ghana", country: "Ghana", team: [player1G,player2G], technicalTeam: [headCoachG,tecnico1G]))
     
     //Selección Japonesa
-    let seleccionadorJ = Miembro(miembroID: "sj001", nombre: "Hajime", apellidos: "Moriyasu", funcion: .SELECCIONADOR)
-    let jugador1J = Miembro(miembroID: "jj001", nombre: "Maya", apellidos: "Yoshida", funcion: .CAPITAN)
-    let jugador2J = Miembro(miembroID: "jj002", nombre: "Ao", apellidos: "Tanaka", funcion: .JUGADOR)
-    let tecnico1J = Miembro(miembroID: "tj001", nombre: "Sakura", apellidos: "Kurogane", funcion: .FISIOTERAPEUTA)
-    listaSelecciones.append(Seleccion(seleccionID: "t008", nombre: "La Nipona", pais: "Japón", jugadores: [jugador1J,jugador2J], equipoTecnico: [seleccionadorJ,tecnico1J]))
+    let headCoachJ = Member(memberID: "sj001", name: "Hajime", subname: "Moriyasu", occupation: .HEAD_COACH)
+    let player1J = Member(memberID: "jj001", name: "Maya", subname: "Yoshida", occupation: .CAPTAIN)
+    let player2J = Member(memberID: "jj002", name: "Ao", subname: "Tanaka", occupation: .PLAYER)
+    let tecnico1J = Member(memberID: "tj001", name: "Sakura", subname: "Kurogane", occupation: .PHYSIOTHERAPIST)
+    autogeneratedList.append(NationalTeam(nationalTeamID: "t008", name: "La Nipona", country: "Japón", team: [player1J,player2J], technicalTeam: [headCoachJ,tecnico1J]))
     
+    
+   // nationalTeamsList? = autogeneratedList
+    return autogeneratedList
 }
 
-//MARK: - EJERCICIO 7 -
-
-class Partido {
-    /*
-    var equipoLocal: Seleccion{
-        listaSelecciones.randomElement()
-        return -1
-    }
-     */
-    var equipoVisitante: Seleccion
-    var resultado: String
-     
-   
-    init(equipoVisitante: Seleccion, resultado: String) {
-        self.equipoVisitante = equipoVisitante
-        self.resultado = resultado
-    }
-    
-}
+//MARK: - EJERCICIO 8 -
+//Ver clase Group.swift
+print("Llega")
+let worldCup = WorldCup(nationalTeamsList: generationOfNationalTeamsList())
+print("Llega2")
+worldCup.generateGroups()
